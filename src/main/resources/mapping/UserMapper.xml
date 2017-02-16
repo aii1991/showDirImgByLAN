@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.boiledcoffee.dao.UserMapper" >
+  <resultMap id="BaseResultMap" type="com.boiledcoffee.model.User" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="nick_name" property="nickName" jdbcType="CHAR" />
+    <result column="user_name" property="userName" jdbcType="CHAR" />
+    <result column="role" property="role" jdbcType="INTEGER" />
+    <result column="pwd" property="pwd" jdbcType="CHAR" />
+    <result column="qq_token" property="qqToken" jdbcType="CHAR" />
+    <result column="wechat_token" property="wechatToken" jdbcType="CHAR" />
+    <result column="email" property="email" jdbcType="CHAR" />
+    <result column="sex" property="sex" jdbcType="INTEGER" />
+    <result column="descibe" property="descibe" jdbcType="CHAR" />
+    <result column="birthday" property="birthday" jdbcType="BIGINT" />
+    <result column="qr_code" property="qrCode" jdbcType="CHAR" />
+    <result column="address" property="address" jdbcType="CHAR" />
+    <result column="age" property="age" jdbcType="INTEGER" />
+    <result column="token" property="token" jdbcType="CHAR" />
+    <result column="token_cre" property="tokenCre" jdbcType="BIGINT" />
+    <result column="token_exp" property="tokenExp" jdbcType="BIGINT" />
+    <result column="create_time" property="createTime" jdbcType="BIGINT" />
+    <result column="update_time" property="updateTime" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, nick_name, user_name, role, pwd, qq_token, wechat_token, email, sex, descibe,
+    birthday, qr_code, address, age, token, token_cre, token_exp, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from t_user
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_user
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.boiledcoffee.model.User" >
+    insert into t_user (id, nick_name, user_name,
+    role, pwd, qq_token, wechat_token,
+    email, sex, descibe, birthday,
+    qr_code, address, age, token,
+    token_cre, token_exp, create_time,
+    update_time)
+    values (#{id,jdbcType=BIGINT}, #{nickName,jdbcType=CHAR}, #{userName,jdbcType=CHAR},
+    #{role,jdbcType=INTEGER}, #{pwd,jdbcType=CHAR}, #{qqToken,jdbcType=CHAR}, #{wechatToken,jdbcType=CHAR},
+    #{email,jdbcType=CHAR}, #{sex,jdbcType=INTEGER}, #{descibe,jdbcType=CHAR}, #{birthday,jdbcType=BIGINT},
+    #{qrCode,jdbcType=CHAR}, #{address,jdbcType=CHAR}, #{age,jdbcType=INTEGER}, #{token,jdbcType=CHAR},
+    #{tokenCre,jdbcType=BIGINT}, #{tokenExp,jdbcType=BIGINT}, #{createTime,jdbcType=BIGINT},
+    #{updateTime,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.boiledcoffee.model.User" >
+    insert into t_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="nickName != null" >
+        nick_name,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="role != null" >
+        role,
+      </if>
+      <if test="pwd != null" >
+        pwd,
+      </if>
+      <if test="qqToken != null" >
+        qq_token,
+      </if>
+      <if test="wechatToken != null" >
+        wechat_token,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="sex != null" >
+        sex,
+      </if>
+      <if test="descibe != null" >
+        descibe,
+      </if>
+      <if test="birthday != null" >
+        birthday,
+      </if>
+      <if test="qrCode != null" >
+        qr_code,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="age != null" >
+        age,
+      </if>
+      <if test="token != null" >
+        token,
+      </if>
+      <if test="tokenCre != null" >
+        token_cre,
+      </if>
+      <if test="tokenExp != null" >
+        token_exp,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="nickName != null" >
+        #{nickName,jdbcType=CHAR},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=CHAR},
+      </if>
+      <if test="role != null" >
+        #{role,jdbcType=INTEGER},
+      </if>
+      <if test="pwd != null" >
+        #{pwd,jdbcType=CHAR},
+      </if>
+      <if test="qqToken != null" >
+        #{qqToken,jdbcType=CHAR},
+      </if>
+      <if test="wechatToken != null" >
+        #{wechatToken,jdbcType=CHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=CHAR},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="descibe != null" >
+        #{descibe,jdbcType=CHAR},
+      </if>
+      <if test="birthday != null" >
+        #{birthday,jdbcType=BIGINT},
+      </if>
+      <if test="qrCode != null" >
+        #{qrCode,jdbcType=CHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=CHAR},
+      </if>
+      <if test="age != null" >
+        #{age,jdbcType=INTEGER},
+      </if>
+      <if test="token != null" >
+        #{token,jdbcType=CHAR},
+      </if>
+      <if test="tokenCre != null" >
+        #{tokenCre,jdbcType=BIGINT},
+      </if>
+      <if test="tokenExp != null" >
+        #{tokenExp,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.boiledcoffee.model.User" >
+    update t_user
+    <set >
+      <if test="nickName != null" >
+        nick_name = #{nickName,jdbcType=CHAR},
+      </if>
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=CHAR},
+      </if>
+      <if test="role != null" >
+        role = #{role,jdbcType=INTEGER},
+      </if>
+      <if test="pwd != null" >
+        pwd = #{pwd,jdbcType=CHAR},
+      </if>
+      <if test="qqToken != null" >
+        qq_token = #{qqToken,jdbcType=CHAR},
+      </if>
+      <if test="wechatToken != null" >
+        wechat_token = #{wechatToken,jdbcType=CHAR},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=CHAR},
+      </if>
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="descibe != null" >
+        descibe = #{descibe,jdbcType=CHAR},
+      </if>
+      <if test="birthday != null" >
+        birthday = #{birthday,jdbcType=BIGINT},
+      </if>
+      <if test="qrCode != null" >
+        qr_code = #{qrCode,jdbcType=CHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=CHAR},
+      </if>
+      <if test="age != null" >
+        age = #{age,jdbcType=INTEGER},
+      </if>
+      <if test="token != null" >
+        token = #{token,jdbcType=CHAR},
+      </if>
+      <if test="tokenCre != null" >
+        token_cre = #{tokenCre,jdbcType=BIGINT},
+      </if>
+      <if test="tokenExp != null" >
+        token_exp = #{tokenExp,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.boiledcoffee.model.User" >
+    update t_user
+    set nick_name = #{nickName,jdbcType=CHAR},
+    user_name = #{userName,jdbcType=CHAR},
+    role = #{role,jdbcType=INTEGER},
+    pwd = #{pwd,jdbcType=CHAR},
+    qq_token = #{qqToken,jdbcType=CHAR},
+    wechat_token = #{wechatToken,jdbcType=CHAR},
+    email = #{email,jdbcType=CHAR},
+    sex = #{sex,jdbcType=INTEGER},
+    descibe = #{descibe,jdbcType=CHAR},
+    birthday = #{birthday,jdbcType=BIGINT},
+    qr_code = #{qrCode,jdbcType=CHAR},
+    address = #{address,jdbcType=CHAR},
+    age = #{age,jdbcType=INTEGER},
+    token = #{token,jdbcType=CHAR},
+    token_cre = #{tokenCre,jdbcType=BIGINT},
+    token_exp = #{tokenExp,jdbcType=BIGINT},
+    create_time = #{createTime,jdbcType=BIGINT},
+    update_time = #{updateTime,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="selectByUserName" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from t_user
+    where user_name = #{userName,jdbcType=CHAR}
+  </select>
+
+  <select id="selectByUserRole" resultMap="BaseResultMap">
+    select * from t_user where role = #{role,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectByToken" resultMap="BaseResultMap">
+    select * from t_user where token = #{token,jdbcType=CHAR}
+  </select>
+
+</mapper>
