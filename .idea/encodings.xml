@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/src/main/java/com/jason/model/communication/HandleResult.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/jason/model/communication/HttpResponseData.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/jason/util/PropertiesUtil.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/jason/util/PwPropertiesUtil.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/config/config.properties" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/config/jdbc.properties" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/config/log4j.properties" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/config/spring-mybatis.xml" charset="UTF-8" />
+  </component>
+</project>
