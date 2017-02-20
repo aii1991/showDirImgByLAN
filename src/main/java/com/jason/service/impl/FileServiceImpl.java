@@ -10,12 +10,10 @@ import com.jason.service.FileService;
  * Created by jsaon on 2017/2/17.
  */
 public class FileServiceImpl extends BaseServiceImpl<FileMapper> implements FileService {
-    public HandleResult insertFile(String name,String path,long size) {
+    public HandleResult insertFile(File file) {
         int status = Status.SUCCESS;
-        File file = null;
         String errorMsg = "";
         try {
-            file = createFile(name,path,size);
             int sqlResult = mapper.insertSelective(file);
             if (sqlResult == 0){
                 status = Status.ERROR;
@@ -43,35 +41,28 @@ public class FileServiceImpl extends BaseServiceImpl<FileMapper> implements File
         return new HandleResult(status,file,errorMsg);
     }
 
-    public HandleResult modifyFile(String name, String path, long size) {
-        return null;
+    public HandleResult modifyFile(File file) {
+        int status = Status.SUCCESS;
+        String errorMsg = "";
+        try {
+            int sqlExcStatus = mapper.updateByPrimaryKeySelective(file);
+            if(sqlExcStatus == 0){
+                status = Status.ERROR;
+                errorMsg = "操作失败";
+            }
+        }catch (Exception e){
+            errorMsg = "服务器内部错误";
+            status = Status.ERROR;
+        }
+        return new HandleResult(status,file,errorMsg);
     }
 
-    public HandleResult findFiles() {
+    public HandleResult findFiles(File file) {
         try {
+
         }catch (Exception e){
 
         }
         return null;
-    }
-
-
-
-    /**
-     * 根据给定参数创建file对象
-     * @param name
-     * @param path
-     * @param size
-     * @return
-     */
-    private File createFile(String name,String path,long size){
-        long id = (name + path).hashCode();
-        File file = new File();
-        file.setId(id);
-        file.setName(name);
-        file.setSize(size);
-        file.setCreateTime(System.currentTimeMillis());
-        file.setUpdateTime(System.currentTimeMillis());
-        return file;
     }
 }
