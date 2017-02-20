@@ -10,15 +10,28 @@ import java.util.Map;
 import java.util.Properties;
 
 /**
- * Created by songlive on 2016/7/5.
+ * Created by jason on 2016/7/5.
  */
 public class PropertiesUtil {
+    private final static String CONFIG_FILE_PATH = "config/config.properties";
     private Properties props;
     private String fileName;
-    public PropertiesUtil(String fileName){
+    private static PropertiesUtil instance;
+
+    private PropertiesUtil(String fileName){
         this.fileName=fileName;
         readProperties(fileName);
     }
+
+    public static PropertiesUtil newInstance(){
+        if(instance == null){
+            instance = new PropertiesUtil(CONFIG_FILE_PATH);
+        }
+        return instance;
+    }
+
+
+
     private void readProperties(String fileName) {
         try {
             props = new Properties();

@@ -1,7 +1,6 @@
 package com.jason.service.impl;
 
 import com.jason.util.PropertiesUtil;
-import com.jason.util.PwPropertiesUtil;
 import org.apache.log4j.Logger;
 
 import javax.annotation.Resource;
@@ -18,7 +17,7 @@ public class BaseServiceImpl<T> {
 
     public BaseServiceImpl(){
         logger = Logger.getLogger(this.getClass());
-        propertiesUtil = PwPropertiesUtil.getInstance().getPropertiesUtil();
+        propertiesUtil = PropertiesUtil.newInstance();
     }
 
 }
