@@ -53,4 +53,13 @@ public class GsonUtil {
         }
     }
 
+    public <T> T fromJson(Reader reader,Type typeOf){
+        try {
+            return gson.fromJson(reader,typeOf);
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 }

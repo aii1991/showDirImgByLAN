@@ -4,8 +4,12 @@ import com.jason.net.interceptor.LoggingInterceptor;
 import com.jason.util.GsonUtil;
 import com.jason.util.PropertiesUtil;
 import okhttp3.*;
+
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Type;
+import java.net.URLEncoder;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -18,7 +22,8 @@ public class JOkHttp {
     }
     private static JOkHttp jOkHttp;
     private static OkHttpClient client;
-    private static final MediaType MEDIA_TYPE = MediaType.parse("*/*");
+    private static final MediaType MEDIA_TYPE = MediaType.parse("application/octet-stream");
+    public static final String ENCODEING = "UTF-8";
 
     public static JOkHttp newInstance(){
         if(jOkHttp == null){
@@ -48,15 +53,19 @@ public class JOkHttp {
      * @param <T>
      * @return
      */
-    public <T> T get(String url,Map<String,String> param,Class<T> clazz){
-        StringBuilder queryString = new StringBuilder();
+    public <T> T get(String url,Map<String,String> param,Class<T> clazz,Type typeOf){
+        StringBuilder queryString = new StringBuilder("?");
         if(param != null){
             int i = 1;
             for (Map.Entry<String,String> entry : param.entrySet()){
                 if(entry.getValue() != null){
                     queryString.append(entry.getKey());
                     queryString.append("=");
-                    queryString.append(entry.getValue());
+                    try {
+                        queryString.append(URLEncoder.encode(entry.getValue(),ENCODEING));
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
                     if (i != param.size()){
                         queryString.append("&");
                     }
@@ -68,6 +77,9 @@ public class JOkHttp {
         Request request = new Request.Builder().url(url).build();
         try {
             Response response = client.newCall(request).execute();
+            if (typeOf != null){
+                return GsonUtil.getInstance().fromJson(response.body().charStream(),typeOf);
+            }
             return GsonUtil.getInstance().fromJson(response.body().charStream(),clazz);
         } catch (IOException e) {
             e.printStackTrace();
@@ -75,8 +87,20 @@ public class JOkHttp {
         return null;
     }
 
+    public <T> T get(String url,Map<String,String> param,Class<T> clazz){
+        return get(url,param,clazz,null);
+    }
+
+    public <T> T get(String url,Map<String,String> param,Type typeOf){
+        return get(url,param,null,typeOf);
+    }
+
+    public <T> T get(String url,Type typeOf){
+        return get(url,null,null,typeOf);
+    }
+
     public <T> T get(String url,Class<T> clazz){
-        return get(url,null,clazz);
+        return get(url,null,clazz,null);
     }
 
     /**
@@ -87,12 +111,12 @@ public class JOkHttp {
      * @param <T>
      * @return
      */
-    public <T> T post(String url,Map<String,String> param,Class<T> clazz){
+    public <T> T post(String url,Map<String,String> param,Class<T> clazz,Type typeOf){
         FormBody.Builder formBodyBuilder = new FormBody.Builder();
         if(param != null){
             for (Map.Entry<String,String> entry : param.entrySet()){
                 if(entry.getValue() != null){
-                    formBodyBuilder.add(entry.getKey(),entry.getValue());
+                    formBodyBuilder.addEncoded(entry.getKey(),entry.getValue());
                 }
             }
         }
@@ -100,6 +124,9 @@ public class JOkHttp {
         Request request = new Request.Builder().url(url).post(requestBody).build();
         try {
             Response response = client.newCall(request).execute();
+            if (typeOf != null){
+                return GsonUtil.getInstance().fromJson(response.body().charStream(),typeOf);
+            }
             return GsonUtil.getInstance().fromJson(response.body().charStream(),clazz);
         } catch (IOException e) {
             e.printStackTrace();
@@ -107,8 +134,20 @@ public class JOkHttp {
         return null;
     }
 
+    public <T> T post(String url,Map<String,String> param,Class<T> clazz){
+        return post(url,param,null,clazz);
+    }
+
+    public <T> T post(String url,Map<String,String> param,Type typeOf){
+        return post(url,param,null,typeOf);
+    }
+
+    public <T> T post(String url,Type typeOf){
+        return post(url,null,null,typeOf);
+    }
+
     public <T> T post(String url,Class<T> clazz){
-        return post(url,clazz);
+        return post(url,null,clazz,null);
     }
 
     /**
@@ -120,13 +159,17 @@ public class JOkHttp {
      * @param <T>
      * @return
      */
-    public <T> T postFile(String url,File file,Map<String,String> param,Class<T> clazz){
+    public <T> T postFileByMultipart(String url, File file, Map<String, String> param, Class<T> clazz){
         MultipartBody.Builder builder = new MultipartBody.Builder();
         builder.setType(MultipartBody.FORM);
         if(param != null){
             for (Map.Entry<String,String> entry : param.entrySet()){
                 if(entry.getValue() != null){
-                    builder.addFormDataPart(entry.getKey(),entry.getValue());
+                    try {
+                        builder.addFormDataPart(entry.getKey(),URLEncoder.encode(entry.getValue(),ENCODEING));
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         }
@@ -135,6 +178,24 @@ public class JOkHttp {
         Request request = new Request.Builder()
                 .url(url)
                 .post(requestBody)
+                .build();
+        try {
+            Response response = client.newCall(request).execute();
+            if(!response.isSuccessful()){
+                throw new IOException("Unexpected code " + response);
+            }else {
+                return GsonUtil.getInstance().fromJson(response.body().charStream(),clazz);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public <T> T postFile(String url, File file, Class<T> clazz){
+        Request request = new Request.Builder()
+                .url(url)
+                .post(RequestBody.create(MEDIA_TYPE,file))
                 .build();
         try {
             Response response = client.newCall(request).execute();

@@ -9,7 +9,7 @@
     <result column="update_time" property="updateTime" jdbcType="BIGINT" />
     <result column="create_time" property="createTime" jdbcType="BIGINT" />
   </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.boiledcoffee.model.Topic" extends="BaseResultMap" >
+  <resultMap id="ResultMapWithBLOBs" type="com.jason.model.File" extends="BaseResultMap" >
   </resultMap>
 
   <sql id="Base_Column_List" >
@@ -105,9 +105,6 @@
     where id = #{id,jdbcType=BIGINT}
   </update>
 
-
-
-
   <select id="selectFiles" resultMap="ResultMapWithBLOBs">
     SELECT * FROM t_file LIMIT #{offset},#{limit}
     <if test="sort == 1">
@@ -118,13 +115,6 @@
     </if>
 
   </select>
-
-
-
-
-
-
-
 
 
 </mapper>

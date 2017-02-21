@@ -2,12 +2,15 @@ package com.jason.service.impl;
 
 import com.jason.constants.Status;
 import com.jason.model.PcsFile;
+import com.jason.model.PcsFileList;
 import com.jason.model.communication.HandleResult;
 import com.jason.net.JOkHttp;
 import com.jason.service.PcsFileService;
 import com.jason.util.PropertiesUtil;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,13 +24,33 @@ public class PcsFileServiceImpl implements PcsFileService{
     public HandleResult uploadFile(String path, File file, String ondup) {
         int status = Status.SUCCESS;
         String errMsg = "";
-        Map<String,String> param = createParamMap("upload");
-        param.put("path",path);
-        param.put("ondup",ondup);
-        PcsFile pcsFile = JOkHttp.newInstance().postFile(BASE_URL,file,param, PcsFile.class);
+        StringBuilder url = new StringBuilder(BASE_URL);
+        try {
+            url.append("?");
+            url.append("method=upload");
+            url.append("&");
+            url.append("access_token=");
+            url.append(PropertiesUtil.newInstance().getProperty("pcb_token"));
+            url.append("&");
+            url.append("path=");url.append(URLEncoder.encode(path+"/"+file.getName(),JOkHttp.ENCODEING));
+            if(ondup != null){
+                url.append("&");
+                url.append("ondup=");
+                url.append(ondup);
+            }
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+//        PcsFile pcsFile = JOkHttp.newInstance().postFileByMultipart(url.toString(),file,null,PcsFile.class);
+        PcsFile pcsFile = JOkHttp.newInstance().postFileByMultipart(url.toString(), file, null, PcsFile.class);
         if(pcsFile == null){
             status = Status.ERROR;
             errMsg = "服务器内部错误";
+        }else {
+            if(pcsFile.getError_code() != 0){
+                status = pcsFile.getError_code();
+                errMsg = pcsFile.getError_msg();
+            }
         }
         return new HandleResult(status,pcsFile,errMsg);
     }
@@ -42,6 +65,11 @@ public class PcsFileServiceImpl implements PcsFileService{
         if(pcsFile == null){
             status = Status.ERROR;
             errMsg = "服务器内部错误";
+        }else {
+            if(pcsFile.getError_code() != 0){
+                status = pcsFile.getError_code();
+                errMsg = pcsFile.getError_msg();
+            }
         }
         return new HandleResult(status,pcsFile,errMsg);
     }
@@ -51,12 +79,17 @@ public class PcsFileServiceImpl implements PcsFileService{
         String errMsg = "";
         Map<String,String> param = createParamMap("meta");
         param.put("path",path);
-        PcsFile pcsFile = JOkHttp.newInstance().get(BASE_URL, param, PcsFile.class);
-        if(pcsFile == null){
+        PcsFileList pcsFileList = JOkHttp.newInstance().get(BASE_URL, param, PcsFileList.class);
+        if(pcsFileList == null){
             status = Status.ERROR;
             errMsg = "服务器内部错误";
+        }else {
+            if(pcsFileList.getError_code() != 0){
+                status = pcsFileList.getError_code();
+                errMsg = pcsFileList.getError_msg();
+            }
         }
-        return new HandleResult(status,pcsFile,errMsg);
+        return new HandleResult(status,pcsFileList,errMsg);
     }
 
     public HandleResult getFsInfos(String param) {
@@ -68,6 +101,11 @@ public class PcsFileServiceImpl implements PcsFileService{
         if(pcsFile == null){
             status = Status.ERROR;
             errMsg = "服务器内部错误";
+        }else {
+            if(pcsFile.getError_code() != 0){
+                status = pcsFile.getError_code();
+                errMsg = pcsFile.getError_msg();
+            }
         }
         return new HandleResult(status,pcsFile,errMsg);
     }
@@ -80,12 +118,17 @@ public class PcsFileServiceImpl implements PcsFileService{
         param.put("by",by);
         param.put("order",order);
         param.put("limit",limit);
-        PcsFile pcsFile = JOkHttp.newInstance().get(BASE_URL, param, PcsFile.class);
-        if(pcsFile == null){
+        PcsFileList pcsFileList = JOkHttp.newInstance().get(BASE_URL, param, PcsFileList.class);
+        if(pcsFileList == null){
             status = Status.ERROR;
             errMsg = "服务器内部错误";
+        }else {
+            if(pcsFileList.getError_code() != 0){
+                status = pcsFileList.getError_code();
+                errMsg = pcsFileList.getError_msg();
+            }
         }
-        return new HandleResult(status,pcsFile,errMsg);
+        return new HandleResult(status,pcsFileList,errMsg);
     }
 
     public HandleResult moveFs(String from, String to) {
@@ -98,6 +141,11 @@ public class PcsFileServiceImpl implements PcsFileService{
         if(pcsFile == null){
             status = Status.ERROR;
             errMsg = "服务器内部错误";
+        }else {
+            if(pcsFile.getError_code() != 0){
+                status = pcsFile.getError_code();
+                errMsg = pcsFile.getError_msg();
+            }
         }
         return new HandleResult(status,pcsFile,errMsg);
     }
@@ -111,6 +159,11 @@ public class PcsFileServiceImpl implements PcsFileService{
         if(pcsFile == null){
             status = Status.ERROR;
             errMsg = "服务器内部错误";
+        }else {
+            if(pcsFile.getError_code() != 0){
+                status = pcsFile.getError_code();
+                errMsg = pcsFile.getError_msg();
+            }
         }
         return new HandleResult(status,pcsFile,errMsg);
     }
@@ -124,6 +177,11 @@ public class PcsFileServiceImpl implements PcsFileService{
         if(pcsFile == null){
             status = Status.ERROR;
             errMsg = "服务器内部错误";
+        }else {
+            if(pcsFile.getError_code() != 0){
+                status = pcsFile.getError_code();
+                errMsg = pcsFile.getError_msg();
+            }
         }
         return new HandleResult(status,pcsFile,errMsg);
     }
@@ -135,12 +193,17 @@ public class PcsFileServiceImpl implements PcsFileService{
         paramMap.put("path", path);
         paramMap.put("wd", wd);
         paramMap.put("re", re);
-        PcsFile pcsFile = JOkHttp.newInstance().get(BASE_URL, paramMap, PcsFile.class);
-        if(pcsFile == null){
+        PcsFileList pcsFileList = JOkHttp.newInstance().get(BASE_URL, paramMap, PcsFileList.class);
+        if(pcsFileList == null){
             status = Status.ERROR;
             errMsg = "服务器内部错误";
+        }else {
+            if(pcsFileList.getError_code() != 0){
+                status = pcsFileList.getError_code();
+                errMsg = pcsFileList.getError_msg();
+            }
         }
-        return new HandleResult(status,pcsFile,errMsg);
+        return new HandleResult(status,pcsFileList,errMsg);
     }
 
     public HandleResult getThumbnail(String path, int quality, int height, int width) {
