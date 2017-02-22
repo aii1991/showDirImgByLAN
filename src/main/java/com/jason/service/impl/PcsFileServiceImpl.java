@@ -7,6 +7,7 @@ import com.jason.model.communication.HandleResult;
 import com.jason.net.JOkHttp;
 import com.jason.service.PcsFileService;
 import com.jason.util.PropertiesUtil;
+import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.UnsupportedEncodingException;
@@ -17,6 +18,7 @@ import java.util.Map;
 /**
  * Created by jason on 2017/2/20.
  */
+@Service(value = "pcsFileServiceImpl")
 public class PcsFileServiceImpl implements PcsFileService{
     private static final String TOKEN = PropertiesUtil.newInstance().getProperty("pcb_token");
     private static final String BASE_URL = PropertiesUtil.newInstance().getProperty("pcb_base_url");

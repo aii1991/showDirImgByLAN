@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * Created by jason on 2017/2/17.
  */
 @Controller
-public class FileController extends BaseController{
+public class FileController extends BaseRestfulController{
 
     @RequestMapping(value = "/file",method = RequestMethod.GET)
     @ResponseBody
