@@ -1,6 +1,5 @@
 package com.jason.model;
 
-import java.util.Arrays;
 import java.util.List;
 
 /**

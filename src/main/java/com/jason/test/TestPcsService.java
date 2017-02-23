@@ -34,7 +34,7 @@ public class TestPcsService{
 
     @Test
     public void testGetDirFiles(){
-        HandleResult<PcsFileList> handleResult = pcsFileService.getDirFiles("/apps/%252Fzhiyun","time","asc",null);
+        HandleResult<PcsFileList> handleResult = pcsFileService.getDirFiles("/apps/%252Fzhiyun/pcs1","time","asc","0-10");
         System.out.println("result=>"+handleResult.getResult().toString());
     }
 
