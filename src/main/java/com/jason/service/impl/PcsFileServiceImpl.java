@@ -7,9 +7,11 @@ import com.jason.model.communication.HandleResult;
 import com.jason.net.JOkHttp;
 import com.jason.service.PcsFileService;
 import com.jason.util.PropertiesUtil;
+import okhttp3.Response;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.HashMap;
@@ -210,6 +212,22 @@ public class PcsFileServiceImpl implements PcsFileService{
 
     public HandleResult getThumbnail(String path, int quality, int height, int width) {
         return null;
+    }
+
+    public HandleResult downloadFile(String path) {
+        int status = Status.SUCCESS;
+        String errMsg = "";
+        Map<String,String> paramMap = createParamMap("download");
+        Response response = null;
+        paramMap.put("path", path);
+        try {
+            response = JOkHttp.newInstance().execGetReq(BASE_URL, paramMap);
+        } catch (IOException e) {
+            status = Status.ERROR;
+            errMsg = "download error";
+            e.printStackTrace();
+        }
+        return new HandleResult(status,response,errMsg);
     }
 
     private Map<String,String> createParamMap(String method){

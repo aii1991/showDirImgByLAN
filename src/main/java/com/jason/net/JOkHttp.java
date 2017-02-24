@@ -54,29 +54,9 @@ public class JOkHttp {
      * @return
      */
     public <T> T get(String url,Map<String,String> param,Class<T> clazz,Type typeOf){
-        StringBuilder queryString = new StringBuilder("?");
-        if(param != null){
-            int i = 1;
-            for (Map.Entry<String,String> entry : param.entrySet()){
-                if(entry.getValue() != null){
-                    queryString.append(entry.getKey());
-                    queryString.append("=");
-                    try {
-                        queryString.append(URLEncoder.encode(entry.getValue(),ENCODEING));
-                    } catch (UnsupportedEncodingException e) {
-                        e.printStackTrace();
-                    }
-                    if (i != param.size()){
-                        queryString.append("&");
-                    }
-                }
-                i++;
-            }
-        }
-        url += queryString;
-        Request request = new Request.Builder().url(url).build();
+
         try {
-            Response response = client.newCall(request).execute();
+            Response response = execGetReq(url,param);
             if (typeOf != null){
                 return GsonUtil.getInstance().fromJson(response.body().charStream(),typeOf);
             }
@@ -103,6 +83,30 @@ public class JOkHttp {
         return get(url,null,clazz,null);
     }
 
+    public Response execGetReq(String url,Map<String,String> param) throws IOException {
+        StringBuilder queryString = new StringBuilder("?");
+        if(param != null){
+            int i = 1;
+            for (Map.Entry<String,String> entry : param.entrySet()){
+                if(entry.getValue() != null){
+                    queryString.append(entry.getKey());
+                    queryString.append("=");
+                    try {
+                        queryString.append(URLEncoder.encode(entry.getValue(),ENCODEING));
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+                    if (i != param.size()){
+                        queryString.append("&");
+                    }
+                }
+                i++;
+            }
+        }
+        url += queryString;
+        Request request = new Request.Builder().url(url).build();
+        return client.newCall(request).execute();
+    }
     /**
      * post Ã·Ωª«Î«Û
      * @param url

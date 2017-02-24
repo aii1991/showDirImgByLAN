@@ -89,4 +89,6 @@ public interface PcsFileService {
      * @return
      */
     HandleResult getThumbnail(String path,int quality,int height,int width);
+
+    HandleResult downloadFile(String path);
 }
