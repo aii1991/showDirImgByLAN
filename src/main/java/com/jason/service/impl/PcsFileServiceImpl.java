@@ -1,5 +1,6 @@
 package com.jason.service.impl;
 
+import com.jason.constants.AppConfig;
 import com.jason.constants.Status;
 import com.jason.model.PcsFile;
 import com.jason.model.PcsFileList;
@@ -36,7 +37,7 @@ public class PcsFileServiceImpl implements PcsFileService{
             url.append("access_token=");
             url.append(PropertiesUtil.newInstance().getProperty("pcb_token"));
             url.append("&");
-            url.append("path=");url.append(URLEncoder.encode(path+"/"+file.getName(),JOkHttp.ENCODEING));
+            url.append("path=");url.append(URLEncoder.encode(path+"/"+file.getName(), AppConfig.ENCODING));
             if(ondup != null){
                 url.append("&");
                 url.append("ondup=");

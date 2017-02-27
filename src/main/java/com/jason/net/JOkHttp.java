@@ -1,5 +1,6 @@
 package com.jason.net;
 
+import com.jason.constants.AppConfig;
 import com.jason.net.interceptor.LoggingInterceptor;
 import com.jason.util.GsonUtil;
 import com.jason.util.PropertiesUtil;
@@ -23,7 +24,6 @@ public class JOkHttp {
     private static JOkHttp jOkHttp;
     private static OkHttpClient client;
     private static final MediaType MEDIA_TYPE = MediaType.parse("application/octet-stream");
-    public static final String ENCODEING = "UTF-8";
 
     public static JOkHttp newInstance(){
         if(jOkHttp == null){
@@ -92,7 +92,7 @@ public class JOkHttp {
                     queryString.append(entry.getKey());
                     queryString.append("=");
                     try {
-                        queryString.append(URLEncoder.encode(entry.getValue(),ENCODEING));
+                        queryString.append(URLEncoder.encode(entry.getValue(), AppConfig.ENCODING));
                     } catch (UnsupportedEncodingException e) {
                         e.printStackTrace();
                     }
@@ -170,7 +170,7 @@ public class JOkHttp {
             for (Map.Entry<String,String> entry : param.entrySet()){
                 if(entry.getValue() != null){
                     try {
-                        builder.addFormDataPart(entry.getKey(),URLEncoder.encode(entry.getValue(),ENCODEING));
+                        builder.addFormDataPart(entry.getKey(),URLEncoder.encode(entry.getValue(),AppConfig.ENCODING));
                     } catch (UnsupportedEncodingException e) {
                         e.printStackTrace();
                     }

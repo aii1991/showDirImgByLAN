@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<taglib xmlns="http://java.sun.com/xml/ns/javaee"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd"
+        version="2.1">
+
+    <tlib-version>1.0</tlib-version>
+    <short-name>jstlcfn</short-name>
+    <uri>http://www.jason.com/jstl/function</uri>
+
+    <function>
+        <description>URL encoding function</description>
+        <name>urlEncode</name>
+        <function-class>com.jason.util.EncodingUtil</function-class>
+        <function-signature>java.lang.String urlEncoding(java.lang.String)</function-signature>
+        <example>${cfn:urlEncoding(path)}</example>
+    </function>
+
+    <function>
+        <description>get file name</description>
+        <name>getFileNameByPath</name>
+        <function-class>com.jason.util.FileUtil</function-class>
+        <function-signature>java.lang.String getFileNameByPath(java.lang.String)</function-signature>
+        <example>${cfn:getFileNameByPath(path)}</example>
+    </function>
+
+
+    <function>
+        <description>is img</description>
+        <name>isImg</name>
+        <function-class>com.jason.util.FileUtil</function-class>
+        <function-signature>boolean isImg(java.lang.String)</function-signature>
+        <example>${cfn:isImg(fileName)}</example>
+    </function>
+
+</taglib>

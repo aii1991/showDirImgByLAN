@@ -1,0 +1,16 @@
+ul li{
+    float: left;
+    list-style-type:none;
+    margin-left: 10px;
+}
+
+.img-file-thumbnail{
+    width: 150px;
+    height: 150px;
+}
+
+.img-desc{
+    text-align: center;
+    font-size: 14px;
+    margin-top: 5px;
+}

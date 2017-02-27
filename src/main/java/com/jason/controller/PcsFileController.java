@@ -32,7 +32,10 @@ public class PcsFileController extends BaseController{
     @RequestMapping(value = "/list",method = RequestMethod.GET)
     public ModelAndView listFile(@RequestParam(name = "path",defaultValue = "")String path,@RequestParam(name = "page",defaultValue = "0") int page){
         ModelAndView modelAndView = new ModelAndView("list_file");
-        HandleResult<PcsFileList> handleResult = pcsFileService.getDirFiles(BASE_PATH + path, "time", "asc", PagingUtil.getLimit(page));
+        if(path.equals("")){
+            path = BASE_PATH + path;
+        }
+        HandleResult<PcsFileList> handleResult = pcsFileService.getDirFiles(path,"time","asc", PagingUtil.getLimit(page));
         if(handleResult.getStatus() == Status.SUCCESS){
             modelAndView.addObject(handleResult.getResult());
             return modelAndView;

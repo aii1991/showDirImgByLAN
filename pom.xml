@@ -57,7 +57,6 @@
           <!--<contextPath>/</contextPath>-->
         <!--</configuration>-->
       <!--</plugin>-->
-
     </plugins>
   </build>
 
@@ -67,7 +66,7 @@
       <artifactId>junit</artifactId>
       <version>4.12</version>
       <!-- 表示开发的时候引入，发布的时候不会加载此包 -->
-      <scope>test</scope>
+      <!--<scope>test</scope>-->
     </dependency>
 
     <dependency>
@@ -164,6 +163,7 @@
       <artifactId>commons-codec</artifactId>
       <version>1.9</version>
     </dependency>
+
     <dependency>
       <groupId>org.apache.tomcat</groupId>
       <artifactId>tomcat-servlet-api</artifactId>
