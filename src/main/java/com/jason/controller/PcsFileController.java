@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
@@ -23,7 +24,7 @@ import java.io.IOException;
  */
 
 @Controller
-@RequestMapping(value = "/file")
+@RequestMapping(value = "/file",produces = {"application/json;charset=UTF-8"})
 public class PcsFileController extends BaseController{
     @Resource
     private PcsFileService pcsFileService;
@@ -45,7 +46,7 @@ public class PcsFileController extends BaseController{
     }
 
     /**
-     * обтьнд╪Ч
+     *
      * @param path
      * @return
      * @throws IOException
