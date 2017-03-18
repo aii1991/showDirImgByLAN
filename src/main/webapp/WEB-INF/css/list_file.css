@@ -14,3 +14,14 @@ ul li{
     font-size: 14px;
     margin-top: 5px;
 }
+
+.folder-bg{
+    background: url("../img/folder.png") no-repeat;
+    background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    -webkit-background-size: cover;
+    width: 120px;
+    height: 135px;
+    margin: 0 auto;
+}

@@ -11,6 +11,10 @@
             window.location.href = "?path="+window.encodeURI(path);
         }else{
             //µã»÷ÁËÍ¼Æ¬
+            $('#viewer').viewer({
+                url: 'data-original'
+            });
         }
     });
+
 })(jQuery);
